@@ -33,7 +33,7 @@ class WhichIsReal:
 def logistic_difference(nfakes=1):
     """Return an objective for the antisymmetric logistic loss with nfakes.
 
-    It returns first and second derivatives of the negatuve log likelihood.
+    It returns first and second derivatives of the negative log likelihood.
 
     Since it is self-supervised, y_true labels are assumed to be
     [1]*ndata + [0]*ndata*nfakes, and ignored.
