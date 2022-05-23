@@ -1,6 +1,6 @@
 .PHONY: examples
-examples: example_step.log example_map.log example_ring.log \
-	example_map_paper.log example_ring_paper.log
+examples: example_ring_paper.log example_map_paper.log \
+	example_ring.log example_map.log example_step.log
 
 
 example_%.log: example_%.py sksym.py
@@ -19,7 +19,9 @@ example_map.log: data_map.log
 
 .PHONY: fmt
 fmt: *.py
-	black -tpy39 *.py
+	black *.py *.py -l79
+	isort *.py *.py --profile black --line-length 79
+	flake8  *.py; :
 
 
 .PHONY: clean

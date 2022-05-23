@@ -6,9 +6,9 @@ import math
 import os
 from math import pi
 
-import numpy
 import lightgbm
 import matplotlib
+import numpy
 from matplotlib import pyplot
 
 import sksym
@@ -22,7 +22,11 @@ CMAP = matplotlib.cm.inferno
 # use latex text / fonts to match document
 # https://matplotlib.org/stable/tutorials/text/usetex.html
 pyplot.rcParams.update(
-    {"text.usetex": True, "font.family": "sans-serif", "font.sans-serif": ["Helvetica"]}
+    {
+        "text.usetex": True,
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Helvetica"],
+    }
 )
 
 # draw maps with dimensions (y, x) = (y, phi) to match image conventions
@@ -169,7 +173,7 @@ def example_ring(
         objective=rotor.objective(),
         subsample=0.5,
         subsample_freq=1,
-        random_state=RNG.integers(2 ** 31),
+        random_state=RNG.integers(2**31),
     )
 
     sksym.fit(model, rotor.pack(x_train))
@@ -319,10 +323,19 @@ def example_ring(
         )
 
     axis.text(
-        0.5,
-        0.8,
+        0.15,
+        0.85,
         r"$Q = \Sigma Q_i = %.3f \pm %.3f$" % (quality, quality_std),
-        horizontalalignment="center",
+        horizontalalignment="left",
+        verticalalignment="center",
+        transform=axis.transAxes,
+    )
+
+    axis.text(
+        0.15 + 0.01,
+        0.75,
+        r"$n = %d$" % len(x_test),
+        horizontalalignment="left",
         verticalalignment="center",
         transform=axis.transAxes,
     )
@@ -395,7 +408,7 @@ def map_phi(iphi, npixel=NGRID):
 
 
 def ring_square(iy0, iy1, iphi0, iphi1):
-    """Return x, y, z arrays for a square wrapped onto the surface of a ring."""
+    """Return x, y, z arrays for a square wrapped onto a ring."""
     y0 = iy0 / NGRID
     y1 = iy1 / NGRID
     phi0 = iphi0 * (2 * pi / NGRID)
@@ -425,7 +438,9 @@ def set_axis3d_equal(axis):
     xlo, xhi = axis.get_xlim()
     ylo, yhi = axis.get_ylim()
     zlo, zhi = axis.get_zlim()
-    return axis.set_box_aspect((abs(xhi - xlo), abs(yhi - ylo), abs(zhi - zlo)))
+    return axis.set_box_aspect(
+        (abs(xhi - xlo), abs(yhi - ylo), abs(zhi - zlo))
+    )
 
 
 # utilities

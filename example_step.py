@@ -4,8 +4,8 @@ Example using sksym to find asymmetry in a step function distribution.
 """
 import os
 
-import numpy
 import lightgbm
+import numpy
 from matplotlib import pyplot
 
 import sksym
@@ -54,7 +54,7 @@ def example_step(suffix, ndata, frac_lo, filter_=None, nfakes=1):
     model = lightgbm.LGBMRegressor(
         objective=rotor.objective(),
         max_depth=1,
-        random_state=RNG.integers(2 ** 31),
+        random_state=RNG.integers(2**31),
     )
 
     sksym.fit(model, rotor.pack(x_train))
@@ -122,8 +122,8 @@ def example_step(suffix, ndata, frac_lo, filter_=None, nfakes=1):
 # filtering
 
 
-def make_filtered_data(ndata, frac_lo, filter_, *, nbatch=2 ** 10):
-    """Return data samples from a step function, possibly subject to filtering."""
+def make_filtered_data(ndata, frac_lo, filter_, *, nbatch=2**10):
+    """Return data samples from a step function (subject to filtering)."""
 
     def make_data(n):
         return numpy.concatenate(
@@ -157,7 +157,7 @@ def make_filtered_data(ndata, frac_lo, filter_, *, nbatch=2 ** 10):
     return data.reshape(-1, 1)
 
 
-def filtered_uniform(filter_, *, nbatch=2 ** 10):
+def filtered_uniform(filter_, *, nbatch=2**10):
     """Return a transform function using the given filter function."""
 
     if filter_ is None:

@@ -6,11 +6,10 @@ import functools
 import glob
 import os
 
-import numpy
 import lightgbm
 import matplotlib
+import numpy
 from matplotlib import pyplot
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from PIL import Image
 
 import sksym
@@ -47,14 +46,20 @@ def main():
     for frac in (0.0, 0.5, 0.9):
         suffix = "%dk_%.1f" % (ndata // 1000, frac)
         suffix = suffix.replace(".", "p")
-        seasons = lambda d: violate(frac, d)
+
+        def seasons(d):
+            return violate(frac, d)
+
         example_map(suffix, ndata, seasons)
         example_map(suffix + "_filtered", ndata, seasons, filter_)
 
     frac = 0.9
     suffix = "%dk_%.1f" % (ndata // 1000, frac)
     suffix = suffix.replace(".", "p")
-    seasons = lambda d: violate(frac, d)
+
+    def seasons(d):
+        return violate(frac, d)
+
     example_map(suffix + "_filtered_n10", ndata, seasons, filter_, nfakes=10)
 
 
@@ -130,7 +135,7 @@ def example_map(suffix, ndata, violate=None, filter_=None, *, nfakes=1):
     model = lightgbm.LGBMRegressor(
         objective=blobber.objective(),
         max_depth=2,
-        random_state=RNG.integers(2 ** 31),
+        random_state=RNG.integers(2**31),
     )
 
     sksym.fit(model, blobber.pack(x_train))

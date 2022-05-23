@@ -6,9 +6,9 @@ import functools
 import glob
 import os
 
-import numpy
 import lightgbm
 import matplotlib
+import numpy
 from matplotlib import pyplot
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from PIL import Image
@@ -24,7 +24,11 @@ CMAP = matplotlib.cm.inferno
 # use latex text / fonts to match document
 # https://matplotlib.org/stable/tutorials/text/usetex.html
 pyplot.rcParams.update(
-    {"text.usetex": True, "font.family": "sans-serif", "font.sans-serif": ["Helvetica"]}
+    {
+        "text.usetex": True,
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Helvetica"],
+    }
 )
 
 
@@ -53,7 +57,10 @@ def main():
     frac = 0.0
     suffix = "%dk_%.1f_filtered" % (ndata // 1000, frac)
     suffix = suffix.replace(".", "p")
-    seasons = lambda d: violate(frac, d)
+
+    def seasons(d):
+        return violate(frac, d)
+
     example_map(suffix, ndata, seasons, filter_)
 
     frac = 0.9
@@ -134,7 +141,7 @@ def example_map(suffix, ndata, violate=None, filter_=None, *, nfakes=1):
     model = lightgbm.LGBMRegressor(
         objective=blobber.objective(),
         max_depth=2,
-        random_state=RNG.integers(2 ** 31),
+        random_state=RNG.integers(2**31),
     )
 
     sksym.fit(model, blobber.pack(x_train))
@@ -240,7 +247,11 @@ def example_map(suffix, ndata, violate=None, filter_=None, *, nfakes=1):
         ax3, width=width, height=height, loc="upper center", borderpad=pad
     )
     ax3cb = figure.colorbar(
-        im, cax=ax3in, orientation="horizontal", ticklocation="top", ticks=[-size, size]
+        im,
+        cax=ax3in,
+        orientation="horizontal",
+        ticklocation="top",
+        ticks=[-size, size],
     )
     ax3cb.ax.tick_params(length=2, pad=1)
 

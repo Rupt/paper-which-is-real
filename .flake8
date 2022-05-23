@@ -1,0 +1,5 @@
+# https://sbarnea.com/lint/black/
+[flake8]
+max-line-length = 79
+extend-ignore =
+    E203,

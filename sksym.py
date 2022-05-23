@@ -1,8 +1,9 @@
 """Challenge symmetries with the sklearn interface."""
 import math
 from dataclasses import dataclass
-from typing import Optional, Callable
+from functools import partial
 from numbers import Integral
+from typing import Callable, Optional
 
 import numpy
 import scipy
@@ -12,18 +13,23 @@ import scipy
 class WhichIsReal:
     """Package a symmetry testing setup with methods to hook into sklearn."""
 
-    transform: Optional[Callable]
-    nfakes: Integral
+    transform: Optional[Callable] = None
+    nfakes: Integral = 1
 
     def objective(self):
         return logistic_difference(self.nfakes)
 
     def pack(self, data):
+        assert (
+            self.transform is not None
+        ), "pack requires a transform function; use stack for arrays of fakes"
         return pack(data, self.transform, self.nfakes)
 
     def stack(self, data, fakes):
         fakes = list(fakes)
-        assert len(fakes) == self.nfakes, "got len(fakes) == %d, but nfakes == %d" % (
+        assert (
+            len(fakes) == self.nfakes
+        ), "got len(fakes) == %d, but nfakes == %d" % (
             len(fakes),
             self.nfakes,
         )
@@ -41,22 +47,22 @@ def logistic_difference(nfakes=1):
     y_pred are model predictions with shape ((1 + nfakes)*ndata,).
     The first n entries are real data; the others are fakes.
     """
+    return partial(_logistic_difference_objective, nfakes)
 
-    def obj(_, y_pred):
-        zeta = y_pred.reshape(1 + nfakes, -1)
-        phi = zeta[0] - zeta[1:]
 
-        dxdash = scipy.special.expit(-phi)
-        if nfakes > 1:
-            dxdash *= 1 / nfakes
-        d2xdash = dxdash * scipy.special.expit(phi)
+def _logistic_difference_objective(nfakes, _, y_pred):
+    zeta = y_pred.reshape(1 + nfakes, -1)
+    phi = zeta[0] - zeta[1:]
 
-        jac = numpy.concatenate([-dxdash.sum(axis=0), dxdash.ravel()])
-        hess = numpy.concatenate([d2xdash.sum(axis=0), d2xdash.ravel()])
+    dxdash = scipy.special.expit(-phi)
+    if nfakes > 1:
+        dxdash *= 1 / nfakes
+    d2xdash = dxdash * scipy.special.expit(phi)
 
-        return jac, hess
+    jac = numpy.concatenate([-dxdash.sum(axis=0), dxdash.ravel()])
+    hess = numpy.concatenate([d2xdash.sum(axis=0), d2xdash.ravel()])
 
-    return obj
+    return jac, hess
 
 
 def pack(data, transform, nfakes=1):
@@ -91,28 +97,28 @@ def fit(model, packed, *args, **kwargs):
     return model.fit(data, labels, *args, **kwargs)
 
 
-def score(model, packed, *, and_std=False):
+def score(model, packed, *, and_std=False, **kwargs):
     """Return the mean log likelihood ratio vs 50:50."""
     return score_log_proba(
-        predict_log_proba(model, packed),
+        predict_log_proba(model, packed, **kwargs),
         and_std=and_std,
     )
 
 
-def predict_proba(model, packed):
+def predict_proba(model, packed, **kwargs):
     """Return probabilities in shape (nfakes, ndata, 2).
 
     shape: (ndata, 2) if nfakes == 1, else (nfakes, ndata, 2)
     """
-    return numpy.exp(predict_log_proba(model, packed))
+    return numpy.exp(predict_log_proba(model, packed, **kwargs))
 
 
-def predict_log_proba(model, packed):
+def predict_log_proba(model, packed, **kwargs):
     """Return log probabilities at packed data.
 
     shape: (ndata, 2) if nfakes == 1, else (nfakes, ndata, 2)
     """
-    zet = predict_zeta(model, packed)
+    zet = predict_zeta(model, packed, **kwargs)
     phi = zet[0] - zet[1:]
 
     if phi.shape[0] == 1:
@@ -129,12 +135,12 @@ def score_log_proba(log_proba, *, and_std=False):
     size = log_proba.shape[-2]
     r = log_proba[..., 0] - math.log(0.5)
     if and_std:
-        return r.mean(), r.std() / size ** 0.5
+        return r.mean(), (r.std() / size**0.5).astype(r.dtype)
     return r.mean()
 
 
-def predict_zeta(model, packed):
+def predict_zeta(model, packed, **kwargs):
     """Return model outputs in shape (ntot, ndata)."""
     ntot, _, ndim = packed.shape
     data = packed.reshape(-1, ndim)
-    return model.predict(data).reshape(ntot, -1)
+    return model.predict(data, **kwargs).reshape(ntot, -1)

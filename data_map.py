@@ -3,8 +3,8 @@ Prepare data for the 2d map example.
 """
 import os
 
-import numpy
 import numba
+import numpy
 from PIL import Image
 
 BASE_MAP = "images/mapdraw_poster.png"
