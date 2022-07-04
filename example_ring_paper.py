@@ -217,12 +217,39 @@ def example_ring(
     ccount = SUPER_CCOUNT
 
     figure = pyplot.figure(dpi=600, figsize=(6, 2))
-    figure.subplots_adjust(0, 0, 1, 1, 0, 0)
+    figure.subplots_adjust(
+        left=0,
+        bottom=0,
+        right=1,
+        top=1,
+        wspace=0,
+        hspace=0,
+    )
 
     def plot_outlines(axis):
         for y0, y1, phi0, phi1, value in draw_filters:
             x, y, z = ring_square(y0, y1, phi0, phi1)
             axis.plot(x, y - 0.5, z, c="k", lw=1, zorder=6)
+
+        # custom z axis
+        axis.plot(
+            [1.1, 1.1],
+            [-0.7, 0.2],
+            [-0.7, -0.7],
+            "k",
+            lw=0.5,
+            zorder=6.1,
+        )
+
+        axis.text(
+            1.1,
+            -0.2,
+            -0.7,
+            r"$z$",
+            horizontalalignment="left",
+            verticalalignment="top",
+            transform=axis.transData,
+        )
 
     def configure_axis(axis):
         axis.elev = 15
@@ -230,7 +257,7 @@ def example_ring(
         s = 0.72
         axis.set_xlim(-1 * s, 1 * s)
         axis.set_ylim(-0.4 * s, 0.6 * s)
-        axis.set_zlim(-1.05 * s, 0.95 * s)
+        axis.set_zlim(-1.09 * s, 0.91 * s)
         set_axis3d_equal(axis)
         axis.set_axis_off()
 
@@ -293,6 +320,8 @@ def example_ring(
     axis.set_yticks([])
     axis.set_xlim(-0.2, 1.05)
     axis.set_xticks([])
+    axis.set_xlabel("$z$")
+    axis.xaxis.set_label_coords(0.56, 0.15)
 
     axis.spines.left.set_bounds(*axis.get_xlim())
     axis.spines.left.set_position(("data", 0))
