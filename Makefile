@@ -19,8 +19,8 @@ example_map.log: data_map.log
 
 .PHONY: fmt
 fmt: *.py
-	black *.py *.py -l79
-	isort *.py *.py --profile black --line-length 79
+	black *.py -l79
+	isort *.py --profile black --line-length 79
 	flake8  *.py; :
 
 
