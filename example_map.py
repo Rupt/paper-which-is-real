@@ -22,6 +22,8 @@ CMAP = matplotlib.cm.inferno
 
 
 def main():
+    os.makedirs(__file__[:-3], exist_ok=True)
+
     ndata = 5_000
 
     def violate(scale, dist):

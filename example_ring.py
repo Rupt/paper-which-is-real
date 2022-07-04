@@ -62,6 +62,8 @@ HOLE = (4, 14, 44, 48, 0)
 
 
 def main():
+    os.makedirs(__file__[:-3], exist_ok=True)
+
     ndata = 5_000
 
     # data sampling distribution

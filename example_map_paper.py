@@ -33,6 +33,8 @@ pyplot.rcParams.update(
 
 
 def main():
+    os.makedirs(__file__[:-3], exist_ok=True)
+
     ndata = 5_000
 
     def violate(scale, dist):
@@ -266,7 +268,7 @@ def example_map(suffix, ndata, violate=None, filter_=None, *, nfakes=1):
     save_fig(figure, "all_%s.png" % suffix)
 
 
-@functools.lru_cache
+@functools.cache
 def load_images():
     """Return lists of input images and height values."""
     images = []

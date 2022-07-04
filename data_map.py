@@ -13,6 +13,7 @@ FOLDER = "data_map"
 
 
 def main():
+    os.makedirs(FOLDER, exist_ok=True)
     img = imload(BASE_MAP)
     unique = numpy.unique(img)
 
