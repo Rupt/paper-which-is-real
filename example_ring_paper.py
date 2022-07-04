@@ -316,7 +316,7 @@ def example_ring(
     # figure: trio: orbit histogram reusing llr from above
     axis = figure.add_subplot(133)
 
-    axis.set_ylim(-0.01, 0.05)
+    axis.set_ylim(-0.013, 0.045)
     axis.set_yticks([])
     axis.set_xlim(-0.2, 1.05)
     axis.set_xticks([])
@@ -355,6 +355,24 @@ def example_ring(
             color="#d74b3e",
             lw=0.5,
             linestyle="--",
+        )
+
+        # makeshift legend
+        pyplot.plot(
+            [0.18, 0.30],
+            [0.6, 0.6],
+            color="#d74b3e",
+            lw=0.5,
+            linestyle="--",
+            transform=axis.transAxes,
+        )
+        axis.text(
+            0.32,
+            0.6,
+            r"$100 \times Q_i / n_i$",
+            horizontalalignment="left",
+            verticalalignment="center",
+            transform=axis.transAxes,
         )
 
     axis.text(
