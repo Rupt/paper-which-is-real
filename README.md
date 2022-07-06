@@ -1,5 +1,4 @@
-# Supporting code for:
-# A method to challenge symmetries in data with self-supervised learning
+# Supporting code for:<br>A method to challenge symmetries in data with self-supervised learning
 https://arxiv.org/abs/2111.05442  \
 Test symmetries with sklearn decision tree models.
 
