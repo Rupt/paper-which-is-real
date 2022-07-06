@@ -452,7 +452,7 @@ def map_y(iy):
     return (NPIXEL_Y // NGRID) * iy
 
 
-def map_phi(iphi, npixel=NGRID):
+def map_phi(iphi):
     """Return the index for grid point iphi."""
     return (NPIXEL_PHI // NGRID) * iphi
 
