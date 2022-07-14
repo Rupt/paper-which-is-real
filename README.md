@@ -4,13 +4,13 @@ Test symmetries with sklearn decision tree models.
 
 # Setup
 Begin from an environment with a recent version of python 3.  \
-I recommend using anaconda:
+We recommend using anaconda:
 ```bash
-conda create -n blank python==3.10.4
+conda create -n which-is-real python==3.10.4
 ```
 followed by
 ```bash
-conda activate blank
+conda activate which-is-real
 ```
 Install and activate a python virtual environment with our required packages:
 ```bash
@@ -30,24 +30,28 @@ We describe each in a little more detail below.
 
 ## Experiment 1: Gappy detector
 The cylindrical particle detector with holes and varying efficiencies.  \
-In the paper, this is illustrated in Figures 2 and 3, and discussed in Section 5.  \
-Execute it with:
+In the paper, this is illustrated in Figures 2 and 3, and discussed in Section 5.
+
+Notebook version: `example_ring_paper.ipynb`.  \
+You should be able to view this on github with all figures and other outputs.
+
+Execute the plain python version with:
 ```bash
 python example_ring_paper.py
 ```
 This reproduces plots from the paper and dumps them into the directory `example_ring_paper/`.  \
-A notebook version is provided as `example_ring_paper.ipynb`.  \
-You should be able to view this on github with all figures and other outputs.
 
 ## Experiment 2: Height map
-The topographical map from Figure 4 and Section 6 of the paper.  \
-Execute it with:
+The topographical map from Figure 4 and Section 6 of the paper.
+
+Notebook version: `example_map_paper.ipynb`.  \
+You should be able to view this on github with all figures and other outputs.
+
+Execute the plain python version with:
 ```bash
 python example_map_paper.py
 ```
-This reproduces plots from the paper and dumps them into the directory `example_map_paper/`.  \
-A notebook version is provided as `example_map_paper.ipynb`.  \
-You should be able to view this on github with all figures and other outputs.
+This reproduces plots from the paper and dumps them into the directory `example_map_paper/`.
 
 ## Bonus experiments:
 * `python example_ring.py`
@@ -60,5 +64,3 @@ You should be able to view this on github with all figures and other outputs.
   * A minimal example testing translation symmetry on the unit interval.
   * Uses rejection sampling for fakes.
   * Plots dump to `example_step/`.
-
-*Independence is worth duplication (an excuse for this code structure)*
