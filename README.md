@@ -1,5 +1,5 @@
 # Supporting code for:<br>A method to challenge symmetries in data with self-supervised learning
-arXiv: https://arxiv.org/abs/2111.05442, Zenodo: FILL ME IN ONCE PUBLIC \
+arXiv: https://arxiv.org/abs/2111.05442, Zenodo: https://doi.org/10.5281/zenodo.6861702 \
 Test symmetries with sklearn decision tree models.
 
 # Setup
