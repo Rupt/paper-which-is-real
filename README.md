@@ -1,5 +1,5 @@
 # Supporting code for:<br>A method to challenge symmetries in data with self-supervised learning
-https://arxiv.org/abs/2111.05442  \
+arXiv: https://arxiv.org/abs/2111.05442, Zenodo: FILL ME IN ONCE PUBLIC \
 Test symmetries with sklearn decision tree models.
 
 # Setup
@@ -34,7 +34,7 @@ The cylindrical particle detector with holes and varying efficiencies.  \
 In the paper, this is illustrated in Figures 2 and 3, and discussed in Section 5.
 
 Notebook version: `example_ring_paper.ipynb`.  \
-You should be able to view this on github with all figures and other outputs.
+You should be able to view this on GitHub with all figures and other outputs.
 
 Execute the plain python version with:
 ```bash
@@ -46,7 +46,7 @@ This reproduces plots from the paper and dumps them into the directory `example_
 The topographical map from Figure 4 and Section 6 of the paper.
 
 Notebook version: `example_map_paper.ipynb`.  \
-You should be able to view this on github with all figures and other outputs.
+You should be able to view this on GitHub with all figures and other outputs.
 
 Execute the plain python version with:
 ```bash
