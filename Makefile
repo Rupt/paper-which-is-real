@@ -5,6 +5,7 @@ examples: example_ring_paper.log example_map_paper.log \
 
 example_%.log: example_%.py sksym.py
 	python $< | tee $@
+	@ls -lh example_$*/*
 
 
 data_%.log: data_%.py

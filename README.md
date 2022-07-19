@@ -25,7 +25,8 @@ To run all, execute:
 ```bash
 make
 ```
-This dumps plots into the various directories `example_*/`.  \
+This dumps plots into the various directories `example_*/`.
+
 We describe each in a little more detail below.
 
 ## Experiment 1: Gappy detector
@@ -37,7 +38,7 @@ You should be able to view this on github with all figures and other outputs.
 
 Execute the plain python version with:
 ```bash
-python example_ring_paper.py
+make example_ring_paper.log
 ```
 This reproduces plots from the paper and dumps them into the directory `example_ring_paper/`.  \
 
@@ -49,18 +50,21 @@ You should be able to view this on github with all figures and other outputs.
 
 Execute the plain python version with:
 ```bash
-python example_map_paper.py
+make example_map_paper.log
 ```
 This reproduces plots from the paper and dumps them into the directory `example_map_paper/`.
 
 ## Bonus experiments:
-* `python example_ring.py`
+* `make example_ring.log`
   * Similar to Experiment 1, plotted in 2D, showing both real and fake (transformed) data.
   * Plots dump to `example_ring/`.
-* `python example_map.py`
+* `make example_map.log`
   * Similar to Experiment 2, with more variety in its filtering symmetry-breaking wave.
   * Plots dump to `example_map/`.
-* `python example_step.py`
+* `make example_step.log`
   * A minimal example testing translation symmetry on the unit interval.
   * Uses rejection sampling for fakes.
   * Plots dump to `example_step/`.
+
+These `make` commands run corresponding `example_*.py` scripts
+after ensuring that input data are prepared.
